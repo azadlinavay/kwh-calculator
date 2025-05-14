@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KWh Calculator | بژمێرێ کیلوواتان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body
+    class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center justify-center p-6 transition-colors duration-500">
+    <div id="container"
+        class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md transition hover:scale-[1.02] duration-300">
+        <div class="flex justify-between items-center mb-6">
+            <h1 id="title" class="text-3xl font-bold text-purple-700">🔌 kWh Calculator</h1>
+            <button onclick="toggleLang()"
+                class="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-md hover:bg-purple-200 transition">
+                Badinî / EN
+            </button>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label id="power-label" class="block text-gray-700 font-medium">Power (Watts)</label>
+                <input id="power" type="number" placeholder="e.g. 1000"
+                    class="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
+            </div>
+
+            <div>
+                <label id="hours-label" class="block text-gray-700 font-medium">Time (Hours)</label>
+                <input id="hours" type="number" placeholder="e.g. 1"
+                    class="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
+            </div>
+
+            <div>
+                <label id="minutes-label" class="block text-gray-700 font-medium">Time (Minutes)</label>
+                <input id="minutes" type="number" placeholder="e.g. 30"
+                    class="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
+            </div>
+
+            <button onclick="calculateKwh()" id="calc-btn"
+                class="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-transform transform hover:scale-105 shadow-md">
+                Calculate
+            </button>
+
+            <div id="result" class="text-center text-lg font-medium text-green-600 mt-4 hidden fade-in-up"></div>
+        </div>
+    </div>
+
+    <footer class="mt-6 text-gray-600 text-sm text-center">
+        Developed by <span class="font-semibold text-purple-700">
+            <a href="https://github.com/azadlinavay" target="_blank">Azad Linavay</a>
+        </span>
+    </footer>
+
+    <script>
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        const translations = {
+            en: {
+                title: '🔌 kWh Calculator',
+                power: 'Power (Watts)',
+                hours: 'Time (Hours)',
+                minutes: 'Time (Minutes)',
+                button: 'Calculate',
+                result: (val) => `⚡ Energy: ${val} kWh`,
+                error: '⚠️ Please enter valid numbers!',
+                dir: 'ltr',
+                align: 'text-left'
+            },
+            ku: {
+                title: '🔌 بژمێرێ کیلو واتان',
+                power: '‌هێزا کارکرنێ (وات)',
+                hours: 'کات (دەمژمێر)',
+                minutes: 'کات (خولەک)',
+                button: 'هژمارتن',
+                result: (val) => `⚡ وزە: ${val} کیلووات-دەمژمێر`,
+                error: '⚠️ تکایە ژمارێن دروست بنڤیسە!',
+                dir: 'rtl',
+                align: 'text-right'
+            }
+        };
+
+        function applyTranslation() {
+            const t = translations[currentLang];
+
+            document.getElementById('html-root').setAttribute('dir', t.dir);
+            document.getElementById('container').classList.remove('text-left', 'text-right');
+            document.getElementById('container').classList.add(t.align);
+
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('power-label').textContent = t.power;
+            document.getElementById('hours-label').textContent = t.hours;
+            document.getElementById('minutes-label').textContent = t.minutes;
+            document.getElementById('calc-btn').textContent = t.button;
+            document.getElementById('result').classList.add('hidden');
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'ku' : 'en';
+            localStorage.setItem('lang', currentLang);
+            applyTranslation();
+        }
+
+        function calculateKwh() {
+            const power = parseFloat(document.getElementById('power').value);
+            const hours = parseFloat(document.getElementById('hours').value) || 0;
+            const minutes = parseFloat(document.getElementById('minutes').value) || 0;
+            const resultBox = document.getElementById('result');
+            const t = translations[currentLang];
+
+            if (!isNaN(power) && (hours > 0 || minutes > 0)) {
+                const totalTime = hours + minutes / 60;
+                const kwh = (power * totalTime) / 1000;
+                resultBox.textContent = t.result(kwh.toFixed(2));
+                resultBox.classList.remove('hidden');
+                resultBox.classList.remove('text-red-600');
+                resultBox.classList.add('text-green-600', 'fade-in-up');
+            } else {
+                resultBox.textContent = t.error;
+                resultBox.classList.remove('hidden');
+                resultBox.classList.remove('text-green-600');
+                resultBox.classList.add('text-red-600', 'fade-in-up');
+            }
+        }
+
+        // Initial language setup
+        applyTranslation();
+    </script>
+</body>
+
+</html>
