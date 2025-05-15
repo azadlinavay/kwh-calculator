@@ -54,7 +54,9 @@
                     onclick="switchTab('months')">هەیڤ</button>
                 <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
                     onclick="switchTab('years')">سال</button>
-            </div> <!-- Tab Content -->
+            </div>
+
+            <!-- Tab Content -->
             <div id="hm" class="tab-content space-y-4">
                 <div>
                     <label id="hours-label" class="block text-gray-700 font-medium">دەم (دەمژمێر)</label>
@@ -93,9 +95,9 @@
             </div>
         </div>
 
-
         <div id="result" class="text-center text-lg font-medium mt-4 hidden fade-in-up"></div>
     </div>
+
     <footer class="mt-6 text-gray-600 text-sm text-center">
         هاتیە دروستکرن ژ لایێ <span class="font-semibold text-purple-700">
             <a href="https://github.com/azadlinavay" target="_blank">ئازاد لیناڤای</a>
@@ -104,7 +106,9 @@
 
     <script>
         let currentLang = localStorage.getItem('lang') || 'ku';
-        let currentTab = 'hm'; const translations = {
+        let currentTab = 'hm';
+
+        const translations = {
             en: {
                 title: '🔌 kWh Calculator',
                 power: 'Power (Watts)',
@@ -117,7 +121,6 @@
                 daysTab: 'Days',
                 monthsTab: 'Months',
                 yearsTab: 'Years',
-                calcBtn: 'Calculate',
                 result: (val) => `⚡ Energy: ${val} kWh`,
                 error: '⚠️ Please enter valid numbers!',
                 dir: 'ltr',
@@ -135,13 +138,14 @@
                 daysTab: 'رۆژ',
                 monthsTab: 'هەیڤ',
                 yearsTab: 'سال',
-                calcBtn: 'هژمارتن',
                 result: (val) => `⚡ وزە: ${val} کیلووات-دەمژمێر`,
                 error: '⚠️ هیڤیە ژمارێن دروست بنڤیسە!',
                 dir: 'rtl',
                 align: 'text-right'
             }
-        }; function applyTranslation() {
+        };
+
+        function applyTranslation() {
             const t = translations[currentLang];
 
             document.getElementById('html-root').setAttribute('dir', t.dir);
@@ -153,36 +157,23 @@
             document.getElementById('power-label').textContent = t.power;
             document.getElementById('hours-label').textContent = t.hours;
             document.getElementById('minutes-label').textContent = t.minutes;
-            document.getElementById('calc-btn').textContent = t.calcBtn;
 
-            // Update tab buttons text
             const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons[0].textContent = t.hmTab;
-            tabButtons[1].textContent = t.daysTab;
-            tabButtons[2].textContent = t.monthsTab;
-            tabButtons[3].textContent = t.yearsTab;
+            [t.hmTab, t.daysTab, t.monthsTab, t.yearsTab].forEach((label, i) => {
+                if (tabButtons[i]) tabButtons[i].textContent = label;
+            });
 
-            // Update tab content labels
-            document.querySelectorAll('#days label')[0].textContent = t.days;
-            document.querySelectorAll('#months label')[0].textContent = t.months;
-            document.querySelectorAll('#years label')[0].textContent = t.years;
+            document.querySelector('#days label').textContent = t.days;
+            document.querySelector('#months label').textContent = t.months;
+            document.querySelector('#years label').textContent = t.years;
 
-            // Hide result when changing language
-            document.getElementById('result').classList.add('hidden');
-
-            // Set text direction for inputs
             const dirClass = t.dir === 'rtl' ? 'text-right' : 'text-left';
             document.querySelectorAll('input').forEach(input => {
                 input.classList.remove('text-right', 'text-left');
                 input.classList.add(dirClass);
             });
 
-            // Update tab spacing for RTL/LTR
-            if (t.dir === 'rtl') {
-                document.getElementById('tabs').classList.add('space-x-reverse');
-            } else {
-                document.getElementById('tabs').classList.remove('space-x-reverse');
-            }
+            document.getElementById('result').classList.add('hidden');
         }
 
         function toggleLang() {
@@ -195,7 +186,7 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(tab).classList.remove('hidden');
             currentTab = tab;
-            calculateKwh(); // auto-calculate on tab change
+            calculateKwh(); // auto-calculate
         }
 
         function calculateKwh() {
@@ -248,9 +239,9 @@
                 if (el) el.addEventListener('input', calculateKwh);
             });
         }
+
         initListeners();
         applyTranslation();
-
     </script>
 </body>
 
