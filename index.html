@@ -433,14 +433,36 @@
                 list.innerHTML += `
                 <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-2xl shadow flex flex-col gap-2 border border-purple-100">
                     <div class="flex justify-between items-center gap-2 flex-wrap">
-                        <input type="text" placeholder="${translations[currentLang].devicePlaceholder}" value="${dev.name}" onchange="updateDevice(${dev.id}, 'name', this.value)" class="flex-1 mr-2 p-2 rounded border border-gray-300 bg-white min-w-[120px]" />
-                        <button onclick="removeDevice(${dev.id})" class="text-red-500 hover:text-red-700 text-xl px-2 py-1 rounded transition" title="${translations[currentLang].remove}">✖</button>
+                        <div class="flex-1 mr-2">
+                            <label class="block text-xs text-gray-600 mb-1">${translations[currentLang].deviceName}</label>
+                            <input type="text" placeholder="${translations[currentLang].devicePlaceholder}" value="${dev.name}" onchange="updateDevice(${dev.id}, 'name', this.value)" class="w-full p-2 rounded border border-gray-300 bg-white min-w-[120px]" />
+                        </div>
+                        <button onclick="removeDevice(${dev.id})" class="text-red-500 hover:text-red-700 text-xl px-2 py-1 rounded transition self-end mb-1" title="${translations[currentLang].remove}">✖</button>
                     </div>
                     <div class="flex gap-2 flex-wrap">
-                        <input type="number" placeholder="${translations[currentLang].powerPlaceholder}" value="${dev.power}" onchange="updateDevice(${dev.id}, 'power', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
-                        <input type="number" placeholder="${translations[currentLang].hoursPlaceholder}" value="${dev.hours}" onchange="updateDevice(${dev.id}, 'hours', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
-                        <input type="number" placeholder="${translations[currentLang].daysPlaceholder}" value="${dev.days}" onchange="updateDevice(${dev.id}, 'days', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
-                        <input type="number" placeholder="${translations[currentLang].monthsPlaceholder}" value="${dev.months}" onchange="updateDevice(${dev.id}, 'months', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
+                        <div class="flex-1 min-w-[80px]">
+                            <label class="block text-xs text-gray-600 mb-1">${translations[currentLang].powerShort}</label>
+                            <input type="number" placeholder="${translations[currentLang].powerPlaceholder}" value="${dev.power}" onchange="updateDevice(${dev.id}, 'power', this.value)" class="w-full p-2 rounded border border-gray-300 bg-white" />
+                        </div>
+                        <div class="flex-1 min-w-[80px]">
+                            <label class="block text-xs text-gray-600 mb-1">${translations[currentLang].hoursShort}</label>
+                            <input type="number" placeholder="${translations[currentLang].hoursPlaceholder}" value="${dev.hours}" onchange="updateDevice(${dev.id}, 'hours', this.value)" class="w-full p-2 rounded border border-gray-300 bg-white" />
+                        </div>
+                        <div class="flex-1 min-w-[80px]">
+                            <label class="block text-xs text-gray-600 mb-1">${translations[currentLang].daysShort}</label>
+                            <input type="number" placeholder="${translations[currentLang].daysPlaceholder}" value="${dev.days}" onchange="updateDevice(${dev.id}, 'days', this.value)" class="w-full p-2 rounded border border-gray-300 bg-white" />
+                        </div>
+                        <div class="flex-1 min-w-[80px]">
+                            <label class="block text-xs text-gray-600 mb-1">${translations[currentLang].monthsShort}</label>
+                            <input type="number" placeholder="${translations[currentLang].monthsPlaceholder}" value="${dev.months}" onchange="updateDevice(${dev.id}, 'months', this.value)" class="w-full p-2 rounded border border-gray-300 bg-white" />
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">
+                        <span>${{
+                        en: 'kWh = (Power × Hours/day × Days × Months) ÷ 1000',
+                        ku: 'کیلووات = (وزە × دەم/رۆژ × رۆژ × هەیڤ) ÷ ١٠٠٠',
+                        ar: 'ك.و.س = (القدرة × ساعات/يوم × أيام × أشهر) ÷ 1000'
+                    }[currentLang]}</span>
                     </div>
                     <div class="text-sm text-gray-700">${translations[currentLang].kwhLabel}: <span class="font-bold">${kwh.toFixed(2)}</span></div>
                 </div>`;
