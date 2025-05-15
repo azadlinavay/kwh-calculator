@@ -1,31 +1,46 @@
-# بژمێرێ کیلو واتان (kWh Calculator)
+# Kurdistan kWh Calculator
 
-ئاپێکا بادینی و ئینگلیزی یا وێبێ بۆ هژمارتنا ڤەگوهاستنا وزا کارەبایێ ب کیلووات-دەمژمێر (کیلووات ساعەت).
+A modern, responsive electricity usage and cost calculator for Kurdistan, supporting Kurdish, English, and Arabic. Calculates kWh and cost using the official Kurdistan residential block tariff system, and allows you to simulate multiple devices and scenarios.
 
-## تایبەتمەندی
-- هژمارتنا کیلووات-دەمژمێر ژ هێزا کارکرنێ (وات) و کات (دەمژمێر و خولەک)
-- پشتگیریا زمانێن بادینی و ئینگلیزی
-- ڕووکاری مۆدێرن و بەرسڤدەر ب Tailwind CSS
-- هەلبژارتنا کاتێ ب دەمژمێر، خولەک، رۆژ، هەیڤ، یان سال
+## Features
 
-## بکارئینان
+- **Multi-language**: Kurdish, English, Arabic (auto-switch UI and all labels)
+- **Block Tariff Calculation**: Uses Kurdistan's official residential electricity pricing (0-400, 401-800, etc.)
+- **Device Scenarios**: Add/remove devices, set power, hours/day, days/month, months, and see total kWh and cost
+- **Instant Calculation**: All results update automatically as you type
+- **Clear Tariff Explanation**: Shows a translated explanation of the block pricing system
+- **Responsive Design**: Works great on mobile and desktop
+- **Modern UI**: Colorful, rounded, and easy to use
 
-### بادینی
-1. هێزا کارکرنێ (وات) بنڤیسە.
-2. کات بنڤیسە (دەمژمێر و/یان خولەک، رۆژ، هەیڤ، یان سال).
-3. کلیک بکە سەر دوگمەیا **هژمارتن** بۆ دیتنا ئەنجامێ.
-4. کلیک بکە سەر دوگمەیا ل سەری راستێ بۆ گوهۆرینا زمانی.
+## How it works
 
-### English
-1. Enter the power in Watts.
-2. Enter the time in hours, minutes, days, months, or years.
-3. Click **Calculate** to see the result.
-4. Switch language using the button at the top right.
+1. **Main Calculator**: Enter device power and usage time (hours/minutes, days, months, or years). See kWh and cost instantly, with a clear breakdown of the tariff blocks.
+2. **Devices & Scenarios**: Add as many devices as you want. For each device, enter:
+   - Name (e.g. Fridge)
+   - Power (Watts)
+   - Hours per day
+   - Days per month
+   - Months
+   - The app calculates kWh and cost for each device and the total for all devices.
+3. **Tariff Info**: The app displays a clear, translated explanation of the block pricing system, so you always know how your bill is calculated.
 
-## Live Demo
-You can use the app by opening `index.html` in your browser.
+## Tariff Example
+
+If you use 900 kWh in a month:
+- First 400 kWh × 72 IQD
+- Next 400 kWh × 108 IQD
+- Last 100 kWh × 175 IQD
+
+## Usage
+
+Just open `index.html` in your browser. No installation required.
+
+## Screenshots
+
+![Screenshot of Kurdistan kWh Calculator](src/images/screenshot.png)
 
 ## License
+
 MIT
 
 ---

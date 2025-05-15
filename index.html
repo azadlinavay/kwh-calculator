@@ -26,82 +26,104 @@
 </head>
 
 <body
-    class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center justify-center p-6 transition-colors duration-500">
+    class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center justify-center p-0 md:p-6 transition-colors duration-500">
     <div id="container"
-        class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md transition hover:scale-[1.02] duration-300">
-        <div class="flex justify-between items-center mb-6">
-            <h1 id="title" class="text-3xl font-bold text-purple-700">🔌 بژمێرێ کیلو واتان</h1>
-            <select id="lang-select" onchange="setLang(this.value)"
-                class="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-md hover:bg-purple-200 transition focus:outline-none focus:ring-2 focus:ring-purple-400">
-                <option value="ku">کوردی</option>
-                <option value="en">EN</option>
-                <option value="ar">عربي</option>
-            </select>
+        class="bg-white shadow-2xl rounded-3xl p-4 md:p-10 w-full max-w-5xl transition hover:scale-[1.01] duration-300 flex flex-col md:flex-row gap-8 md:gap-12 border border-purple-200">
+        <div class="flex-1 min-w-[320px]">
+            <div class="flex justify-between items-center mb-8">
+                <h1 id="title" class="text-3xl md:text-4xl font-extrabold text-purple-700 tracking-tight drop-shadow">🔌
+                    بژمێرێ کیلو واتان</h1>
+                <select id="lang-select" onchange="setLang(this.value)"
+                    class="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-md hover:bg-purple-200 transition focus:outline-none focus:ring-2 focus:ring-purple-400 border border-purple-300">
+                    <option value="ku">کوردی</option>
+                    <option value="en">EN</option>
+                    <option value="ar">عربي</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label id="power-label" class="block text-gray-700 font-semibold mb-1">‌وزە (وات)</label>
+                <input id="power" type="number" placeholder="نموونە: 1000"
+                    class="w-full mb-4 p-3 rounded-xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 transition text-right bg-purple-50 placeholder-purple-300" />
+            </div>
+            <!-- Tabs -->
+            <div>
+                <div class="flex mb-4 space-x-2 space-x-reverse" id="tabs">
+                    <button
+                        class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded-lg font-semibold hover:bg-purple-200 focus:ring-2 focus:ring-purple-400 transition"
+                        onclick="switchTab('hm')">دەمژمێر و خولەک</button>
+                    <button
+                        class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded-lg font-semibold hover:bg-purple-200 focus:ring-2 focus:ring-purple-400 transition"
+                        onclick="switchTab('days')">رۆژ</button>
+                    <button
+                        class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded-lg font-semibold hover:bg-purple-200 focus:ring-2 focus:ring-purple-400 transition"
+                        onclick="switchTab('months')">هەیڤ</button>
+                    <button
+                        class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded-lg font-semibold hover:bg-purple-200 focus:ring-2 focus:ring-purple-400 transition"
+                        onclick="switchTab('years')">سال</button>
+                </div>
+                <!-- Tab Content -->
+                <div id="hm" class="tab-content space-y-4">
+                    <div>
+                        <label id="hours-label" class="block text-gray-700 font-medium">دەم (دەمژمێر)</label>
+                        <input id="hours" type="number"
+                            class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                    </div>
+                    <div>
+                        <label id="minutes-label" class="block text-gray-700 font-medium">دەم (خولەک)</label>
+                        <input id="minutes" type="number"
+                            class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                    </div>
+                </div>
+
+                <div id="days" class="tab-content space-y-4 hidden">
+                    <div>
+                        <label class="block text-gray-700 font-medium">دەم (رۆژ)</label>
+                        <input id="days-input" type="number"
+                            class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                    </div>
+                </div>
+
+                <div id="months" class="tab-content space-y-4 hidden">
+                    <div>
+                        <label class="block text-gray-700 font-medium">دەم (هەیڤ)</label>
+                        <input id="months-input" type="number"
+                            class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                    </div>
+                </div>
+
+                <div id="years" class="tab-content space-y-4 hidden">
+                    <div>
+                        <label class="block text-gray-700 font-medium">دەم (سال)</label>
+                        <input id="years-input" type="number"
+                            class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="result" class="text-center text-lg font-semibold mt-6 hidden fade-in-up rounded-xl p-4"></div>
         </div>
-
-        <div>
-            <label id="power-label" class="block text-gray-700 font-medium mb-1">‌وزە (وات)</label>
-            <input id="power" type="number" placeholder="نموونە: 1000"
-                class="w-full mb-4 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition text-right" />
+        <div class="flex-1 min-w-[320px]">
+            <h2 id="devices-title"
+                class="text-xl md:text-2xl font-extrabold text-purple-700 mb-4 flex items-center gap-2 drop-shadow-sm">
+                <span>🧮</span><span>Devices & Scenarios</span>
+            </h2>
+            <div class="mb-4">
+                <div id="tariff-info"
+                    class="bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-2xl p-4 text-sm text-purple-900 leading-relaxed shadow-sm">
+                    <!-- Tariff info will be set by JS translation -->
+                </div>
+            </div>
+            <div id="devices-list" class="space-y-4"></div>
+            <button id="add-device-btn" onclick="addDevice()"
+                class="mt-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-3 rounded-2xl shadow-lg hover:from-purple-600 hover:to-pink-600 transition font-bold w-full text-lg flex items-center justify-center gap-2">
+                <span class="text-xl">＋</span><span id="add-device-label">Add Device</span>
+            </button>
+            <div id="devices-summary" class="mt-8 text-purple-800 font-bold text-lg"></div>
         </div>
-
-        <!-- Tabs -->
-        <div>
-            <div class="flex mb-4 space-x-2 space-x-reverse" id="tabs">
-                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
-                    onclick="switchTab('hm')">دەمژمێر و خولەک</button>
-                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
-                    onclick="switchTab('days')">رۆژ</button>
-                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
-                    onclick="switchTab('months')">هەیڤ</button>
-                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
-                    onclick="switchTab('years')">سال</button>
-            </div>
-
-            <!-- Tab Content -->
-            <div id="hm" class="tab-content space-y-4">
-                <div>
-                    <label id="hours-label" class="block text-gray-700 font-medium">دەم (دەمژمێر)</label>
-                    <input id="hours" type="number"
-                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
-                </div>
-                <div>
-                    <label id="minutes-label" class="block text-gray-700 font-medium">دەم (خولەک)</label>
-                    <input id="minutes" type="number"
-                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
-                </div>
-            </div>
-
-            <div id="days" class="tab-content space-y-4 hidden">
-                <div>
-                    <label class="block text-gray-700 font-medium">دەم (رۆژ)</label>
-                    <input id="days-input" type="number"
-                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
-                </div>
-            </div>
-
-            <div id="months" class="tab-content space-y-4 hidden">
-                <div>
-                    <label class="block text-gray-700 font-medium">دەم (هەیڤ)</label>
-                    <input id="months-input" type="number"
-                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
-                </div>
-            </div>
-
-            <div id="years" class="tab-content space-y-4 hidden">
-                <div>
-                    <label class="block text-gray-700 font-medium">دەم (سال)</label>
-                    <input id="years-input" type="number"
-                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
-                </div>
-            </div>
-        </div>
-
-        <div id="result" class="text-center text-lg font-medium mt-4 hidden fade-in-up"></div>
     </div>
-
-    <footer class="mt-6 text-gray-600 text-sm text-center">
-        هاتیە دروستکرن ژ لایێ <span class="font-semibold text-purple-700">
+    <footer
+        class="mt-8 text-gray-600 text-sm text-center w-full py-4 bg-white bg-opacity-70 border-t border-purple-100">
+        <span id="footer-made">هاتیە دروستکرن ژ لایێ</span> <span class="font-semibold text-purple-700">
             <a href="https://github.com/azadlinavay" target="_blank">ئازاد لیناڤای</a>
         </span>
     </footer>
@@ -126,7 +148,24 @@
                 result: (val) => `⚡ Energy: ${val} kWh`,
                 error: '⚠️ Please enter valid numbers!',
                 dir: 'ltr',
-                align: 'text-left'
+                align: 'text-left',
+                deviceName: 'Device name',
+                powerShort: 'Power (W)',
+                hoursShort: 'Hours/day',
+                daysShort: 'Days',
+                monthsShort: 'Months',
+                kwhLabel: 'kWh',
+                totalKwh: 'Total kWh',
+                totalCost: 'Total Cost',
+                addDevice: 'Add Device',
+                devicesTitle: 'Devices & Scenarios',
+                made: 'Made by',
+                devicePlaceholder: 'e.g. Fridge',
+                powerPlaceholder: 'e.g. 150',
+                hoursPlaceholder: 'e.g. 8',
+                daysPlaceholder: 'e.g. 30',
+                monthsPlaceholder: 'e.g. 1',
+                remove: 'Remove',
             },
             ku: {
                 title: '🔌 بژمێرێ کیلو واتان',
@@ -143,7 +182,24 @@
                 result: (val) => `⚡ وزە: ${val} کیلووات-دەمژمێر`,
                 error: '⚠️ هیڤیە ژمارێن دروست بنڤیسە!',
                 dir: 'rtl',
-                align: 'text-right'
+                align: 'text-right',
+                deviceName: 'ناڤێ ئامیرەی',
+                powerShort: 'وزە (وات)',
+                hoursShort: 'دەم/رۆژ',
+                daysShort: 'رۆژ',
+                monthsShort: 'هەیڤ',
+                kwhLabel: 'کیلووات-دەمژمێر',
+                totalKwh: 'کۆیێ گشتی کیلووات',
+                totalCost: 'بهایێ گشتی',
+                addDevice: 'زێدەکرنا ئامیرەی',
+                devicesTitle: 'ئامیرە و سیناریو',
+                made: 'هاتیە گەشەپێدان ژ لایێ',
+                devicePlaceholder: 'نموونە: سەرماوەر',
+                powerPlaceholder: 'نموونە: ١٥٠',
+                hoursPlaceholder: 'نموونە: ٨',
+                daysPlaceholder: 'نموونە: ٣٠',
+                monthsPlaceholder: 'نموونە: ١',
+                remove: 'ژێبرن',
             },
             ar: {
                 title: '🔌 حاسبة الكيلو واط',
@@ -160,8 +216,49 @@
                 result: (val) => `⚡ الطاقة: ${val} كيلو واط-ساعة`,
                 error: '⚠️ الرجاء إدخال أرقام صحيحة!',
                 dir: 'rtl',
-                align: 'text-right'
+                align: 'text-right',
+                deviceName: 'اسم الجهاز',
+                powerShort: 'القدرة (واط)',
+                hoursShort: 'ساعات/يوم',
+                daysShort: 'أيام',
+                monthsShort: 'أشهر',
+                kwhLabel: 'كيلو واط-ساعة',
+                totalKwh: 'إجمالي ك.و.س',
+                totalCost: 'إجمالي التكلفة',
+                addDevice: 'إضافة جهاز',
+                devicesTitle: 'الأجهزة والسيناريوهات',
+                made: 'تم الإنشاء بواسطة',
+                devicePlaceholder: 'مثال: ثلاجة',
+                powerPlaceholder: 'مثال: ١٥٠',
+                hoursPlaceholder: 'مثال: ٨',
+                daysPlaceholder: 'مثال: ٣٠',
+                monthsPlaceholder: 'مثال: ١',
+                remove: 'حذف',
             }
+        };
+
+        const tariffDescriptions = {
+            en: `Residential Tariff (IQD/kWh):<br>
+                <span class='block'>0-400 kWh: <b>72</b></span>
+                <span class='block'>401-800 kWh: <b>108</b></span>
+                <span class='block'>801-1200 kWh: <b>175</b></span>
+                <span class='block'>1201-1600 kWh: <b>265</b></span>
+                <span class='block'>1601+ kWh: <b>350</b></span><br>
+                <span class='block mt-1'>The price is calculated in blocks. For example, if you use 900 kWh: the first 400 are at 72 IQD, the next 400 at 108 IQD, and the last 100 at 175 IQD.</span>`,
+            ku: `بهایێ کارەبێ (IQD/کیلووات-دەمژمێر):<br>
+                <span class='block'>٠-٤٠٠: <b>٧٢</b></span>
+                <span class='block'>٤٠١-٨٠٠: <b>١٠٨</b></span>
+                <span class='block'>٨٠١-١٢٠٠: <b>١٧٥</b></span>
+                <span class='block'>١٢٠١-١٦٠٠: <b>٢٦٥</b></span>
+                <span class='block'>١٦٠١+ : <b>٣٥٠</b></span><br>
+                <span class='block mt-1'>بهایێ کارەبێ ب قەبارە دهێتە هژمارتن. بۆ نموونە ئەگەر ٩٠٠ کیلووات بکاربینیت: ئێکەم ٤٠٠ ب ٧٢ IQD، دووەم ٤٠٠ ب ١٠٨ IQD، و ١٠٠ی دویماهی ب ١٧٥ IQD.</span>`,
+            ar: `تعرفة الكهرباء المنزلية (دينار/كيلو واط-ساعة):<br>
+                <span class='block'>٠-٤٠٠: <b>٧٢</b></span>
+                <span class='block'>٤٠١-٨٠٠: <b>١٠٨</b></span>
+                <span class='block'>٨٠١-١٢٠٠: <b>١٧٥</b></span>
+                <span class='block'>١٢٠١-١٦٠٠: <b>٢٦٥</b></span>
+                <span class='block'>١٦٠١+ : <b>٣٥٠</b></span><br>
+                <span class='block mt-1'>يتم حساب السعر حسب الشرائح. مثلاً إذا استهلكت ٩٠٠ كيلو واط: أول ٤٠٠ بسعر ٧٢ دينار، والثانية ٤٠٠ بسعر ١٠٨ دينار، وآخر ١٠٠ بسعر ١٧٥ دينار.</span>`
         };
 
         function applyTranslation() {
@@ -186,6 +283,11 @@
             document.querySelector('#months label').textContent = t.months;
             document.querySelector('#years label').textContent = t.years;
 
+            document.getElementById('devices-title').textContent = `🧮 ${t.devicesTitle}`;
+            document.getElementById('add-device-label').textContent = t.addDevice;
+            document.getElementById('footer-made').textContent = t.made;
+            document.getElementById('add-device-btn').title = t.addDevice;
+
             const dirClass = t.dir === 'rtl' ? 'text-right' : 'text-left';
             document.querySelectorAll('input').forEach(input => {
                 input.classList.remove('text-right', 'text-left');
@@ -193,6 +295,8 @@
             });
 
             document.getElementById('result').classList.add('hidden');
+            updateTariffInfo();
+            renderDevices();
         }
 
         function setLang(lang) {
@@ -253,7 +357,8 @@
             }
 
             const kwh = (power * totalHours) / 1000;
-            resultBox.textContent = t.result(kwh.toFixed(2));
+            const cost = calculateTariff(kwh);
+            resultBox.innerHTML = `${t.result(kwh.toFixed(2))}<br><span class='text-blue-700'>💸 ${t.totalCost}: ${cost.toLocaleString()} IQD</span><div class='mt-2 text-xs text-gray-500'>${tariffDescriptions[currentLang]}</div>`;
             resultBox.classList.remove('hidden', 'text-red-600');
             resultBox.classList.add('text-green-600', 'fade-in-up');
         }
@@ -265,9 +370,111 @@
             });
         }
 
+        // Kurdistan residential tariff slabs
+        const tariffSlabs = [
+            { upTo: 400, rate: 72 },
+            { upTo: 800, rate: 108 },
+            { upTo: 1200, rate: 175 },
+            { upTo: 1600, rate: 265 },
+            { upTo: Infinity, rate: 350 }
+        ];
+
+        function calculateTariff(kwh) {
+            let remaining = kwh;
+            let total = 0;
+            let prev = 0;
+            for (const slab of tariffSlabs) {
+                const slabKwh = Math.min(remaining, slab.upTo - prev);
+                if (slabKwh > 0) {
+                    total += slabKwh * slab.rate;
+                    remaining -= slabKwh;
+                }
+                prev = slab.upTo;
+                if (remaining <= 0) break;
+            }
+            return total;
+        }
+
+        function updateTariffInfo() {
+            document.getElementById('tariff-info').innerHTML = tariffDescriptions[currentLang];
+        }
+
+        // Device scenario logic
+        let devices = [];
+        function addDevice() {
+            const id = Date.now() + Math.random();
+            devices.push({
+                id,
+                name: '',
+                power: '',
+                hours: '',
+                days: 30,
+                months: 1
+            });
+            renderDevices();
+        }
+        function removeDevice(id) {
+            devices = devices.filter(d => d.id !== id);
+            renderDevices();
+        }
+        function updateDevice(id, field, value) {
+            const d = devices.find(dev => dev.id === id);
+            if (d) { d[field] = value; renderDevices(); }
+        }
+        function renderDevices() {
+            const list = document.getElementById('devices-list');
+            list.innerHTML = '';
+            let totalKwh = 0;
+            let details = [];
+            devices.forEach(dev => {
+                const kwh = (parseFloat(dev.power) || 0) * (parseFloat(dev.hours) || 0) * (parseFloat(dev.days) || 0) * (parseFloat(dev.months) || 0) / 1000;
+                totalKwh += kwh;
+                details.push({ name: dev.name, kwh });
+                list.innerHTML += `
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-2xl shadow flex flex-col gap-2 border border-purple-100">
+                    <div class="flex justify-between items-center gap-2 flex-wrap">
+                        <input type="text" placeholder="${translations[currentLang].devicePlaceholder}" value="${dev.name}" onchange="updateDevice(${dev.id}, 'name', this.value)" class="flex-1 mr-2 p-2 rounded border border-gray-300 bg-white min-w-[120px]" />
+                        <button onclick="removeDevice(${dev.id})" class="text-red-500 hover:text-red-700 text-xl px-2 py-1 rounded transition" title="${translations[currentLang].remove}">✖</button>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <input type="number" placeholder="${translations[currentLang].powerPlaceholder}" value="${dev.power}" onchange="updateDevice(${dev.id}, 'power', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
+                        <input type="number" placeholder="${translations[currentLang].hoursPlaceholder}" value="${dev.hours}" onchange="updateDevice(${dev.id}, 'hours', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
+                        <input type="number" placeholder="${translations[currentLang].daysPlaceholder}" value="${dev.days}" onchange="updateDevice(${dev.id}, 'days', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
+                        <input type="number" placeholder="${translations[currentLang].monthsPlaceholder}" value="${dev.months}" onchange="updateDevice(${dev.id}, 'months', this.value)" class="w-1/4 min-w-[80px] p-2 rounded border border-gray-300 bg-white" />
+                    </div>
+                    <div class="text-sm text-gray-700">${translations[currentLang].kwhLabel}: <span class="font-bold">${kwh.toFixed(2)}</span></div>
+                </div>`;
+            });
+            // Summary
+            const totalCost = calculateTariff(totalKwh);
+            let summary = devices.length ?
+                `<div class="mt-2">${translations[currentLang].totalKwh}: <span class="font-bold">${totalKwh.toFixed(2)}</span></div>
+                 <div>${translations[currentLang].totalCost}: <span class="font-bold">${totalCost.toLocaleString()} IQD</span></div>` : '';
+            if (devices.length > 0) {
+                summary += `<div class='mt-2 text-xs text-gray-500'>${tariffDescriptions[currentLang]}</div>`;
+                summary += `<div class='mt-2 text-xs text-gray-700'>`;
+                details.forEach(d => {
+                    summary += `<div>${d.name ? d.name + ': ' : ''}${d.kwh.toFixed(2)} kWh</div>`;
+                });
+                summary += `</div>`;
+            }
+            document.getElementById('devices-summary').innerHTML = summary;
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 700) {
+                document.getElementById('container').classList.remove('flex-row');
+                document.getElementById('container').classList.add('flex-col');
+            } else {
+                document.getElementById('container').classList.remove('flex-col');
+                document.getElementById('container').classList.add('flex-row');
+            }
+        });
+
         initListeners();
         applyTranslation();
         updateLangSelect();
+        renderDevices();
     </script>
 </body>
 
