@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="ku" id="html-root" dir="rtl">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KWh Calculator | بژمێرێ کیلوواتان</title>
+    <title>بژمێرێ کیلوواتان | KWh Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fadeInUp {
@@ -30,57 +30,94 @@
     <div id="container"
         class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md transition hover:scale-[1.02] duration-300">
         <div class="flex justify-between items-center mb-6">
-            <h1 id="title" class="text-3xl font-bold text-purple-700">🔌 kWh Calculator</h1>
+            <h1 id="title" class="text-3xl font-bold text-purple-700">🔌 بژمێرێ کیلو واتان</h1>
             <button onclick="toggleLang()"
                 class="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-md hover:bg-purple-200 transition">
-                Badinî / EN
+                EN / بادینی
             </button>
         </div>
 
-        <div class="space-y-4">
-            <div>
-                <label id="power-label" class="block text-gray-700 font-medium">Power (Watts)</label>
-                <input id="power" type="number" placeholder="e.g. 1000"
-                    class="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
-            </div>
-
-            <div>
-                <label id="hours-label" class="block text-gray-700 font-medium">Time (Hours)</label>
-                <input id="hours" type="number" placeholder="e.g. 1"
-                    class="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
-            </div>
-
-            <div>
-                <label id="minutes-label" class="block text-gray-700 font-medium">Time (Minutes)</label>
-                <input id="minutes" type="number" placeholder="e.g. 30"
-                    class="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition" />
-            </div>
-
-            <button onclick="calculateKwh()" id="calc-btn"
-                class="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition-transform transform hover:scale-105 shadow-md">
-                Calculate
-            </button>
-
-            <div id="result" class="text-center text-lg font-medium text-green-600 mt-4 hidden fade-in-up"></div>
+        <div>
+            <label id="power-label" class="block text-gray-700 font-medium mb-1">‌وزە (وات)</label>
+            <input id="power" type="number" placeholder="نموونە: 1000"
+                class="w-full mb-4 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition text-right" />
         </div>
+
+        <!-- Tabs -->
+        <div>
+            <div class="flex mb-4 space-x-2 space-x-reverse" id="tabs">
+                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
+                    onclick="switchTab('hm')">دەمژمێر و خولەک</button>
+                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
+                    onclick="switchTab('days')">رۆژ</button>
+                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
+                    onclick="switchTab('months')">هەیڤ</button>
+                <button class="tab-button bg-purple-100 text-purple-700 px-3 py-1 rounded hover:bg-purple-200"
+                    onclick="switchTab('years')">سال</button>
+            </div> <!-- Tab Content -->
+            <div id="hm" class="tab-content space-y-4">
+                <div>
+                    <label id="hours-label" class="block text-gray-700 font-medium">دەم (دەمژمێر)</label>
+                    <input id="hours" type="number"
+                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                </div>
+                <div>
+                    <label id="minutes-label" class="block text-gray-700 font-medium">دەم (خولەک)</label>
+                    <input id="minutes" type="number"
+                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                </div>
+            </div>
+
+            <div id="days" class="tab-content space-y-4 hidden">
+                <div>
+                    <label class="block text-gray-700 font-medium">دەم (رۆژ)</label>
+                    <input id="days-input" type="number"
+                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                </div>
+            </div>
+
+            <div id="months" class="tab-content space-y-4 hidden">
+                <div>
+                    <label class="block text-gray-700 font-medium">دەم (هەیڤ)</label>
+                    <input id="months-input" type="number"
+                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                </div>
+            </div>
+
+            <div id="years" class="tab-content space-y-4 hidden">
+                <div>
+                    <label class="block text-gray-700 font-medium">دەم (سال)</label>
+                    <input id="years-input" type="number"
+                        class="w-full mt-1 p-3 rounded-lg border border-gray-300 text-right" />
+                </div>
+            </div>
+        </div>
+
+
+        <div id="result" class="text-center text-lg font-medium mt-4 hidden fade-in-up"></div>
     </div>
-
     <footer class="mt-6 text-gray-600 text-sm text-center">
-        Developed by <span class="font-semibold text-purple-700">
-            <a href="https://github.com/azadlinavay" target="_blank">Azad Linavay</a>
+        هاتیە دروستکرن ژ لایێ <span class="font-semibold text-purple-700">
+            <a href="https://github.com/azadlinavay" target="_blank">ئازاد لیناڤای</a>
         </span>
     </footer>
 
     <script>
-        let currentLang = localStorage.getItem('lang') || 'en';
-
-        const translations = {
+        let currentLang = localStorage.getItem('lang') || 'ku';
+        let currentTab = 'hm'; const translations = {
             en: {
                 title: '🔌 kWh Calculator',
                 power: 'Power (Watts)',
                 hours: 'Time (Hours)',
                 minutes: 'Time (Minutes)',
-                button: 'Calculate',
+                days: 'Time (Days)',
+                months: 'Time (Months)',
+                years: 'Time (Years)',
+                hmTab: 'Hour & Minute',
+                daysTab: 'Days',
+                monthsTab: 'Months',
+                yearsTab: 'Years',
+                calcBtn: 'Calculate',
                 result: (val) => `⚡ Energy: ${val} kWh`,
                 error: '⚠️ Please enter valid numbers!',
                 dir: 'ltr',
@@ -88,21 +125,27 @@
             },
             ku: {
                 title: '🔌 بژمێرێ کیلو واتان',
-                power: 'وزە (وات)',
-                hours: 'کات (دەمژمێر)',
-                minutes: 'کات (خولەک)',
-                button: 'هژمارتن',
+                power: '‌وزە (وات)',
+                hours: 'دەم (دەمژمێر)',
+                minutes: 'دەم (خولەک)',
+                days: 'دەم (رۆژ)',
+                months: 'دەم (هەیڤ)',
+                years: 'دەم (سال)',
+                hmTab: 'دەمژمێر و خولەک',
+                daysTab: 'رۆژ',
+                monthsTab: 'هەیڤ',
+                yearsTab: 'سال',
+                calcBtn: 'هژمارتن',
                 result: (val) => `⚡ وزە: ${val} کیلووات-دەمژمێر`,
-                error: '⚠️ تکایە ژمارێن دروست بنڤیسە!',
+                error: '⚠️ هیڤیە ژمارێن دروست بنڤیسە!',
                 dir: 'rtl',
                 align: 'text-right'
             }
-        };
-
-        function applyTranslation() {
+        }; function applyTranslation() {
             const t = translations[currentLang];
 
             document.getElementById('html-root').setAttribute('dir', t.dir);
+            document.getElementById('html-root').setAttribute('lang', currentLang);
             document.getElementById('container').classList.remove('text-left', 'text-right');
             document.getElementById('container').classList.add(t.align);
 
@@ -110,8 +153,36 @@
             document.getElementById('power-label').textContent = t.power;
             document.getElementById('hours-label').textContent = t.hours;
             document.getElementById('minutes-label').textContent = t.minutes;
-            document.getElementById('calc-btn').textContent = t.button;
+            document.getElementById('calc-btn').textContent = t.calcBtn;
+
+            // Update tab buttons text
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons[0].textContent = t.hmTab;
+            tabButtons[1].textContent = t.daysTab;
+            tabButtons[2].textContent = t.monthsTab;
+            tabButtons[3].textContent = t.yearsTab;
+
+            // Update tab content labels
+            document.querySelectorAll('#days label')[0].textContent = t.days;
+            document.querySelectorAll('#months label')[0].textContent = t.months;
+            document.querySelectorAll('#years label')[0].textContent = t.years;
+
+            // Hide result when changing language
             document.getElementById('result').classList.add('hidden');
+
+            // Set text direction for inputs
+            const dirClass = t.dir === 'rtl' ? 'text-right' : 'text-left';
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('text-right', 'text-left');
+                input.classList.add(dirClass);
+            });
+
+            // Update tab spacing for RTL/LTR
+            if (t.dir === 'rtl') {
+                document.getElementById('tabs').classList.add('space-x-reverse');
+            } else {
+                document.getElementById('tabs').classList.remove('space-x-reverse');
+            }
         }
 
         function toggleLang() {
@@ -120,30 +191,66 @@
             applyTranslation();
         }
 
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tab).classList.remove('hidden');
+            currentTab = tab;
+            calculateKwh(); // auto-calculate on tab change
+        }
+
         function calculateKwh() {
             const power = parseFloat(document.getElementById('power').value);
-            const hours = parseFloat(document.getElementById('hours').value) || 0;
-            const minutes = parseFloat(document.getElementById('minutes').value) || 0;
             const resultBox = document.getElementById('result');
             const t = translations[currentLang];
 
-            if (!isNaN(power) && (hours > 0 || minutes > 0)) {
-                const totalTime = hours + minutes / 60;
-                const kwh = (power * totalTime) / 1000;
-                resultBox.textContent = t.result(kwh.toFixed(2));
-                resultBox.classList.remove('hidden');
-                resultBox.classList.remove('text-red-600');
-                resultBox.classList.add('text-green-600', 'fade-in-up');
-            } else {
+            let totalHours = 0;
+
+            if (isNaN(power)) {
                 resultBox.textContent = t.error;
-                resultBox.classList.remove('hidden');
-                resultBox.classList.remove('text-green-600');
+                resultBox.classList.remove('hidden', 'text-green-600');
                 resultBox.classList.add('text-red-600', 'fade-in-up');
+                return;
             }
+
+            switch (currentTab) {
+                case 'hm':
+                    const hours = parseFloat(document.getElementById('hours').value) || 0;
+                    const minutes = parseFloat(document.getElementById('minutes').value) || 0;
+                    totalHours = hours + minutes / 60;
+                    break;
+                case 'days':
+                    totalHours = (parseFloat(document.getElementById('days-input').value) || 0) * 24;
+                    break;
+                case 'months':
+                    totalHours = (parseFloat(document.getElementById('months-input').value) || 0) * 30 * 24;
+                    break;
+                case 'years':
+                    totalHours = (parseFloat(document.getElementById('years-input').value) || 0) * 365 * 24;
+                    break;
+            }
+
+            if (totalHours <= 0) {
+                resultBox.textContent = t.error;
+                resultBox.classList.remove('hidden', 'text-green-600');
+                resultBox.classList.add('text-red-600', 'fade-in-up');
+                return;
+            }
+
+            const kwh = (power * totalHours) / 1000;
+            resultBox.textContent = t.result(kwh.toFixed(2));
+            resultBox.classList.remove('hidden', 'text-red-600');
+            resultBox.classList.add('text-green-600', 'fade-in-up');
         }
 
-        // Initial language setup
+        function initListeners() {
+            ['power', 'hours', 'minutes', 'days-input', 'months-input', 'years-input'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', calculateKwh);
+            });
+        }
+        initListeners();
         applyTranslation();
+
     </script>
 </body>
 
