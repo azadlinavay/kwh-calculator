@@ -31,10 +31,12 @@
         class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md transition hover:scale-[1.02] duration-300">
         <div class="flex justify-between items-center mb-6">
             <h1 id="title" class="text-3xl font-bold text-purple-700">🔌 بژمێرێ کیلو واتان</h1>
-            <button onclick="toggleLang()"
-                class="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-md hover:bg-purple-200 transition">
-                EN / بادینی
-            </button>
+            <select id="lang-select" onchange="setLang(this.value)"
+                class="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-md hover:bg-purple-200 transition focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <option value="ku">کوردی</option>
+                <option value="en">EN</option>
+                <option value="ar">عربي</option>
+            </select>
         </div>
 
         <div>
@@ -142,6 +144,23 @@
                 error: '⚠️ هیڤیە ژمارێن دروست بنڤیسە!',
                 dir: 'rtl',
                 align: 'text-right'
+            },
+            ar: {
+                title: '🔌 حاسبة الكيلو واط',
+                power: 'القدرة (واط)',
+                hours: 'الوقت (ساعات)',
+                minutes: 'الوقت (دقائق)',
+                days: 'الوقت (أيام)',
+                months: 'الوقت (أشهر)',
+                years: 'الوقت (سنوات)',
+                hmTab: 'ساعات ودقائق',
+                daysTab: 'أيام',
+                monthsTab: 'أشهر',
+                yearsTab: 'سنوات',
+                result: (val) => `⚡ الطاقة: ${val} كيلو واط-ساعة`,
+                error: '⚠️ الرجاء إدخال أرقام صحيحة!',
+                dir: 'rtl',
+                align: 'text-right'
             }
         };
 
@@ -176,10 +195,16 @@
             document.getElementById('result').classList.add('hidden');
         }
 
-        function toggleLang() {
-            currentLang = currentLang === 'en' ? 'ku' : 'en';
+        function setLang(lang) {
+            currentLang = lang;
             localStorage.setItem('lang', currentLang);
             applyTranslation();
+            updateLangSelect();
+        }
+
+        function updateLangSelect() {
+            const select = document.getElementById('lang-select');
+            if (select) select.value = currentLang;
         }
 
         function switchTab(tab) {
@@ -242,6 +267,7 @@
 
         initListeners();
         applyTranslation();
+        updateLangSelect();
     </script>
 </body>
 
